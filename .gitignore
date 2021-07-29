@@ -105,3 +105,4 @@ dist
 
 #TypeScript Output
 dist/
+.DS_Store
