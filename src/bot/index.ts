@@ -40,4 +40,5 @@ export default async () => {
   app.listen(port, () => {
     console.log(`Health Check Working ${env.DOMAIN}:${port}`);
   });
+  bot.start({ drop_pending_updates: true });
 };
