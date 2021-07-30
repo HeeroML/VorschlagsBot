@@ -7,4 +7,5 @@ export default cleanEnv(process.env, {
   TOKEN: str(),
   CACHE: num(),
   MONGO: str(),
+  DOMAIN: str(),
 });

@@ -38,7 +38,6 @@ export default async () => {
     res.sendStatus(200);
   });
   app.listen(port, () => {
-    console.log(`Health Check Working http://localhost:${port}`);
+    console.log(`Health Check Working ${env.DOMAIN}:${port}`);
   });
-  await bot.start({ drop_pending_updates: true });
 };
