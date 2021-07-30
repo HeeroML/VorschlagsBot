@@ -9,7 +9,7 @@ import { groupArray } from "../config/categories";
 import { MyContext } from "../types/bot";
 //@ts-ignore
 import meta from "meta-grabber";
-var uniqid = require("uniqid");
+import { v5 as uuidv5 } from "uuid";
 const composer = new Composer<MyContext>();
 
 composer.on("message:text").filter(
@@ -111,7 +111,7 @@ composer.on("callback_query").filter(
   async (ctx: MyContext) => {
     ctx.session.wizard = "group.add";
     ctx.session.step = 4;
-    ctx.session.groupID = uniqid();
+    ctx.session.groupID = uuidv5(ctx.session.groupLink, uuidv5.URL);
     await ctx.deleteMessage();
     await ctx.answerCallbackQuery({ text: "Antwort erhalten" });
     const categoryID = Number(
