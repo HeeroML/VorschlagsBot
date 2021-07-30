@@ -7,6 +7,7 @@ import groupDelete from "./groupDelete";
 import groupUpdate from "./groupUpdate";
 import { MyContext } from "../types/bot";
 const composer = new Composer<MyContext>();
+composer.use(start);
 composer.use(commands);
 composer
   .filter((ctx: MyContext) => ctx.session.wizard == "group.add")
@@ -19,7 +20,5 @@ composer
   .use(groupUpdate);
 composer.filter((ctx: MyContext) => ctx.chat?.type == "private").use(commands);
 composer.on("callback_query").use(callback);
-
-composer.use(start);
 
 export default composer;
