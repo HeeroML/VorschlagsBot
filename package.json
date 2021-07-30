@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A Telegram bot that handles updates of @gruppen List.",
   "main": "dist",
+  "engines": {
+    "node": ">14.8"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist"
