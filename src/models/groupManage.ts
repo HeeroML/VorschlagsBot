@@ -13,7 +13,7 @@ interface GROUPS {
 const schema = new Schema<GROUPS>({
   groupID: {
     type: String,
-    unique: true,
+    unique: false,
   },
   userId: {
     type: Number,
@@ -28,7 +28,7 @@ const schema = new Schema<GROUPS>({
   groupDescription: {
     type: String,
   },
-  groupCategorie: {
+  groupCat: {
     type: Number,
   },
   groupType: {
@@ -47,7 +47,7 @@ groupCategorie: number,
 groupType: string) => {
 
 console.log("Group Add called: " + groupID, userId, groupName, groupLink, groupDescription, groupCategorie, groupType)
-  const groupAdd = new GROUP({ groupdId: groupID, userId: userId, groupName: groupName, groupLink: groupLink, groupDescription: groupDescription, groupCategorie: groupCategorie, groupType: groupType })
+  const groupAdd = new GROUP({ groupdId: groupID, userId: userId, groupName: groupName, groupLink: groupLink, groupDescription: groupDescription, groupCat: groupCategorie, groupType: groupType })
   groupAdd.save(function (err: any) {
     if (err) return console.error(err);
     console.log("Group Saved!")
