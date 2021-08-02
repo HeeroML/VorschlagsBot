@@ -48,6 +48,8 @@ composer.on("message::url").filter(
     (await isUrlExists(ctx.message.text.toString())) && //@ts-ignore
     ctx.message.text.toString().includes("t.me"),
   async (ctx: MyContext) => {
+      //@ts-ignore
+      console.log(`R Test: ${await getGroupLink(ctx.message.text)}`)
     if (ctx.message?.text && await getGroupLink(ctx.message.text)) {
       ctx.session.wizard = "group.add";
       ctx.session.step = 2;
@@ -67,6 +69,22 @@ Wähle nun ob dein Link eine Gruppe oder Kanal ist!`,
           disable_web_page_preview: true,
         }
       );
+    } else {
+        ctx.session.wizard = "start";
+        ctx.session.step = 0;
+        ctx.session.groupLink = "none";
+        ctx.session.groupType = "none";
+        ctx.session.categoryId = 100;
+        ctx.session.groupName = "string";
+        ctx.session.groupDescription = "";
+        await ctx.reply(
+            `<b>Dein Link ist bereits hunzugefügt</>`,
+            {
+                reply_markup: await getMainMenu(ctx),
+                parse_mode: "HTML",
+                disable_web_page_preview: true,
+            }
+        );
     }
   }
 );
