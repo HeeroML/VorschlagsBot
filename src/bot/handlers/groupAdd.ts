@@ -167,7 +167,7 @@ composer.on("callback_query").filter(
           console.log("Error sending Template Post: " + e);
         });
       await ctx.reply(
-        `✅ Gruppe erfolgreich hinzugefügt. Sie wird nun überprüft!
+        `✅ Gruppe erfolgreich hinzugefügt! Sie wird nun überprüft!
         
 Ich kann deine Gruppen verwalten für @gruppen!`,
         {
