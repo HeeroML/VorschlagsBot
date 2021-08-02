@@ -9,7 +9,11 @@ import { groupArray } from "../config/categories";
 import { MyContext } from "../types/bot";
 //@ts-ignore
 import meta from "meta-grabber";
-import { v5 as uuidv5 } from "uuid";
+import { customAlphabet } from "nanoid";
+
+const alphabet =
+  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+const nanoid = customAlphabet(alphabet, 10);
 const composer = new Composer<MyContext>();
 
 composer.on("message:text").filter(
@@ -111,7 +115,7 @@ composer.on("callback_query").filter(
   async (ctx: MyContext) => {
     ctx.session.wizard = "group.add";
     ctx.session.step = 4;
-    ctx.session.groupID = uuidv5(ctx.session.groupLink, uuidv5.URL);
+    ctx.session.groupID = nanoid();
     await ctx.deleteMessage();
     await ctx.answerCallbackQuery({ text: "Antwort erhalten" });
     const categoryID = Number(

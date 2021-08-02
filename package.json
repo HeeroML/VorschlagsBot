@@ -29,11 +29,11 @@
     "meta-grabber": "^1.0.0",
     "mongodb": "^4.0.1",
     "mongoose": "^5.13.3",
+    "nanoid": "^3.1.23",
     "node-fetch": "^2.6.1",
     "puppeteer": "^9.1.1",
     "uniqid": "^5.3.0",
-    "url-exists-nodejs": "^0.1.0",
-    "uuid": "^8.3.2"
+    "url-exists-nodejs": "^0.1.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",

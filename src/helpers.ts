@@ -1,6 +1,10 @@
 import { InlineKeyboard } from "grammy";
 import { groupArray } from "./bot/config/categories";
 import { MyContext } from "./bot/types/bot";
+import { customAlphabet } from "nanoid";
+const alphabet =
+  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+export const nanoid = customAlphabet(alphabet, 10);
 
 export const getAddConfirmMarkup = async (
   ctx: MyContext
