@@ -14,6 +14,15 @@ export const getAddConfirmMarkup = async (
     .text("Nein", "channelAddNo");
 };
 
+export const getMainMenu = async (ctx: MyContext): Promise<InlineKeyboard> => {
+  return new InlineKeyboard()
+    .text("Gruppe hinzufügen", "group.add")
+    .row()
+    .text("Gruppe updaten", "group.update")
+    .row()
+    .text("Gruppe löschen", "group.delete");
+};
+
 export const getCategoriesMarkup = async (): Promise<InlineKeyboard> => {
   return new InlineKeyboard()
     .text(groupArray[0][0], "channelCat.0")

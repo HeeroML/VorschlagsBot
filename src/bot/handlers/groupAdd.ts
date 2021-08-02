@@ -3,6 +3,7 @@ import isUrlExists from "url-exists-nodejs";
 import {
   getAddConfirmMarkup,
   getCategoriesMarkup,
+  getMainMenu,
   nanoid,
   templatePost,
 } from "../../helpers";
@@ -175,12 +176,7 @@ composer.on("callback_query").filter(
         
 Ich kann deine Gruppen verwalten für @gruppen!`,
         {
-          reply_markup: new InlineKeyboard()
-            .text("Gruppe hinzufügen", "group.add")
-            .row()
-            .text("Gruppe updaten", "group.update")
-            .row()
-            .text("Gruppe löschen", "group.delete"),
+          reply_markup: await getMainMenu(ctx),
         }
       );
     } else if (ctx.callbackQuery?.data == "channelAddNo") {
@@ -196,12 +192,7 @@ Ich kann deine Gruppen verwalten für @gruppen!`,
         
 Ich kann deine Gruppen verwalten für @gruppen!`,
         {
-          reply_markup: new InlineKeyboard()
-            .text("Gruppe hinzufügen", "group.add")
-            .row()
-            .text("Gruppe updaten", "group.update")
-            .row()
-            .text("Gruppe löschen", "group.delete"),
+          reply_markup: await getMainMenu(ctx),
         }
       );
     }
