@@ -17,7 +17,6 @@ const schema = new Schema<GROUPS>({
   },
   userId: {
     type: Number,
-    unique: false,
   },
   groupName: {
     type: String,
