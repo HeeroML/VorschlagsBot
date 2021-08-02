@@ -38,7 +38,7 @@ const schema = new Schema<GROUPS>({
   },
 });
 
-const GROUP = model("groups", schema);
+const GROUP = model("Groups", schema);
 
 export const createGroup = (userId: number, access: string) =>
   GROUP.updateOne({}, { userId, access }, { upsert: true });
