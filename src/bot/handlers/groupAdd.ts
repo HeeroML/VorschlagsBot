@@ -1,16 +1,11 @@
-import { Composer, InlineKeyboard } from "grammy";
+import {Composer, InlineKeyboard} from "grammy";
 import isUrlExists from "url-exists-nodejs";
-import {
-  getAddConfirmMarkup,
-  getCategoriesMarkup,
-  getMainMenu,
-  nanoid,
-  templatePost,
-} from "../../helpers";
-import { groupArray } from "../config/categories";
-import { MyContext } from "../types/bot";
+import {getAddConfirmMarkup, getCategoriesMarkup, getMainMenu, nanoid, templatePost,} from "../../helpers";
+import {groupArray} from "../config/categories";
+import {MyContext} from "../types/bot";
 //@ts-ignore
 import meta from "meta-grabber";
+import {createGroup} from "../../models/groupManage";
 
 const composer = new Composer<MyContext>();
 
@@ -116,10 +111,9 @@ composer.on("callback_query").filter(
     ctx.session.groupID = nanoid();
     await ctx.deleteMessage();
     await ctx.answerCallbackQuery({ text: "Antwort erhalten" });
-    const categoryID = Number(
-      ctx.callbackQuery?.data?.replace("channelCat.", "")
+      ctx.session.categoryId = Number(
+        ctx.callbackQuery?.data?.replace("channelCat.", "")
     );
-    ctx.session.categoryId = categoryID;
     const menu = await getAddConfirmMarkup(ctx);
     let textGroup: string;
     let textGroup2: string;
@@ -153,8 +147,9 @@ composer.on("callback_query").filter(
   async (ctx: MyContext) => {
     await ctx.answerCallbackQuery();
     await ctx.deleteMessage();
-    if (ctx.callbackQuery?.data?.includes("channelAdd.")) {
-      ctx
+    if (ctx.callbackQuery?.data?.includes("channelAdd.") && ctx.from) {
+        createGroup(ctx.session.groupID,ctx.from.id, ctx.session.groupName, ctx.session.groupLink, ctx.session.groupDescription, ctx.session.categoryId, ctx.session.groupType)
+        ctx
         .reply(await templatePost(ctx), {
           parse_mode: "HTML",
           disable_web_page_preview: true,

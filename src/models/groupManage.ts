@@ -1,5 +1,4 @@
-import { model } from "mongoose";
-import { Schema } from "mongoose";
+import {model, Schema} from "mongoose";
 
 interface GROUPS {
   groupID: string;
@@ -8,7 +7,7 @@ interface GROUPS {
   groupLink: string;
   groupDescription: string;
   groupCategorie: number;
-  groupType: number;
+  groupType: string;
 }
 
 const schema = new Schema<GROUPS>({
@@ -34,20 +33,24 @@ const schema = new Schema<GROUPS>({
     type: Number,
   },
   groupType: {
-    type: Number,
+    type: String,
   },
 });
 
 const GROUP = model("Groups", schema);
 
-export const createGroup = (userId: number, access: string) =>
-  GROUP.updateOne({}, { userId, access }, { upsert: true });
+export const createGroup = ( groupID: string,
+userId: Number,
+groupName: string,
+groupLink: string,
+groupDescription: string,
+groupCategorie: number,
+groupType: string) =>
+  GROUP.updateOne({}, { groupID, userId, groupName, groupLink, groupDescription, groupCategorie, groupType }, { upsert: true });
 
 export const getGroupID = async (groupID: number) => {
-  const r = await GROUP.findOne({ groupID }).exec();
-  return r;
+  return await GROUP.findOne({groupID}).exec();
 };
 export const getGroupLink = async (groupLink: string) => {
-  const r = await GROUP.findOne({ groupLink }).exec();
-  return r;
+  return await GROUP.findOne({groupLink}).exec();
 };
