@@ -78,7 +78,9 @@ Wähle nun ob dein Link eine Gruppe oder Kanal ist!`,
         ctx.session.groupName = "string";
         ctx.session.groupDescription = "";
         await ctx.reply(
-            `<b>Dein Link ist bereits hunzugefügt</>`,
+            `<b>Dein Link ist bereits in unserer Datenbank!</>
+
+Bitte starte den Prozess neu!`,
             {
                 reply_markup: await getMainMenu(ctx),
                 parse_mode: "HTML",
