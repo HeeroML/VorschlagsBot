@@ -50,7 +50,7 @@ composer.on("message::url").filter(
   async (ctx: MyContext) => {
       //@ts-ignore
       console.log(`R Test: ${await getGroupLink(ctx.message.text)}`)
-    if (ctx.message?.text && await getGroupLink(ctx.message.text)) {
+    if (ctx.message?.text && !await getGroupLink(ctx.message.text)) {
       ctx.session.wizard = "group.add";
       ctx.session.step = 2;
       ctx.session.groupLink = ctx.message.text;
