@@ -11,9 +11,9 @@ interface GROUPS {
 }
 
 const schema = new Schema<GROUPS>({
-  groupID: {
+  groupId: {
     type: String,
-    unique: false,
+    unique: true,
   },
   userId: {
     type: Number,
