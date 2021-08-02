@@ -13,12 +13,19 @@ export const getAddConfirmMarkup = async (
     .text("Ja", "channelAdd." + ctx.session.categoryId)
     .text("Nein", "channelAddNo");
 };
+export const getDeleteMarkup = async (
+  ctx: MyContext
+): Promise<InlineKeyboard> => {
+  return new InlineKeyboard()
+    .text("Ja", "channelDelete." + ctx.session.groupID)
+    .text("Nein", "channelDeleteNo");
+};
 
 export const getMainMenu = async (ctx: MyContext): Promise<InlineKeyboard> => {
   return new InlineKeyboard()
     .text("Gruppe hinzufügen", "group.add")
     .row()
-    .text("Gruppe updaten", "group.update")
+    .text("Gruppe aktualisieren", "group.update")
     .row()
     .text("Gruppe löschen", "group.delete");
 };
@@ -43,8 +50,7 @@ export const getCategoriesMarkup = async (): Promise<InlineKeyboard> => {
     .row()
     .text(groupArray[0][8], "channelCat.8")
     .row()
-    .text(groupArray[0][9], "channelCat.9")
-    .text(groupArray[0][10], "channelCat.10");
+    .text(groupArray[0][9], "channelCat.9");
 };
 export const getCategoriesLinkMarkup = async (): Promise<InlineKeyboard> => {
   return new InlineKeyboard()
