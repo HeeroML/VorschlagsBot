@@ -3,17 +3,14 @@ import isUrlExists from "url-exists-nodejs";
 import {
   getAddConfirmMarkup,
   getCategoriesMarkup,
+  nanoid,
   templatePost,
 } from "../../helpers";
 import { groupArray } from "../config/categories";
 import { MyContext } from "../types/bot";
 //@ts-ignore
 import meta from "meta-grabber";
-import { customAlphabet } from "nanoid";
 
-const alphabet =
-  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-const nanoid = customAlphabet(alphabet, 10);
 const composer = new Composer<MyContext>();
 
 composer.on("message:text").filter(
