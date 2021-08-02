@@ -148,7 +148,7 @@ composer.on("callback_query").filter(
     await ctx.answerCallbackQuery();
     await ctx.deleteMessage();
     if (ctx.callbackQuery?.data?.includes("channelAdd.") && ctx.from) {
-        createGroup(ctx.session.groupID,ctx.from.id, ctx.session.groupName, ctx.session.groupLink, ctx.session.groupDescription, ctx.session.categoryId, ctx.session.groupType)
+        createGroup(ctx.session.groupID,ctx.from.id, ctx.session.groupName, ctx.session.groupLink, "Test", ctx.session.categoryId, ctx.session.groupType)
         ctx
         .reply(await templatePost(ctx), {
           parse_mode: "HTML",

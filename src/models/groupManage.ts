@@ -48,7 +48,7 @@ groupCategorie: number,
 groupType: string) => {
 
 console.log("Group Add called: " + groupID, userId, groupName, groupLink, groupDescription, groupCategorie, groupType)
-  const groupAdd = new GROUP({ groupdId: groupID, userId: userId, groupName: groupName, groupLink: groupLink, groupDescriotion: groupDescription,groupCategorie: groupCategorie, groupType: groupType })
+  const groupAdd = new GROUP({ groupdId: groupID, userId: userId, groupName: groupName, groupLink: groupLink, groupDescription: groupDescription, groupCategorie: groupCategorie, groupType: groupType })
   groupAdd.save(function (err: any) {
     if (err) return console.error(err);
     console.log("Group Saved!")
