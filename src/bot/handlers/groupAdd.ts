@@ -78,7 +78,6 @@ composer.on("callback_query").filter(
     await ctx.answerCallbackQuery({ text: "Antwort erhalten" });
     await ctx.deleteMessage();
     const menu = await getCategoriesMarkup();
-    console.log(menu);
     if (ctx.callbackQuery?.data == "group.group") {
       ctx.session.groupType = "Group";
       await ctx.reply(
