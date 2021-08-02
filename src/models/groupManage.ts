@@ -8,6 +8,7 @@ interface GROUPS {
   groupDescription: string;
   groupCat: number;
   groupType: string;
+  confirmed: boolean;
 }
 
 const schema = new Schema<GROUPS>({
@@ -33,6 +34,9 @@ const schema = new Schema<GROUPS>({
   groupType: {
     type: String,
   },
+  confirmed: {
+    type: Boolean,
+  }
 });
 
 const GROUP = model("Groups", schema);
@@ -46,7 +50,7 @@ groupCat: number,
 groupType: string) => {
 
 console.log("Group Add called: " + groupID, userId, groupName, groupLink, groupDescription, groupCat, groupType)
-  const groupAdd = new GROUP({ groupID: groupID, userId: userId, groupName: groupName, groupLink: groupLink, groupDescription: groupDescription, groupCat: groupCat, groupType: groupType })
+  const groupAdd = new GROUP({ groupID: groupID, userId: userId, groupName: groupName, groupLink: groupLink, groupDescription: groupDescription, groupCat: groupCat, groupType: groupType, confirmed: false })
   groupAdd.save(function (err: any) {
     if (err) return console.error(err);
     console.log("Group Saved!")
@@ -57,5 +61,6 @@ export const getGroupID = async (groupID: number) => {
   return await GROUP.findOne({groupID}).exec();
 };
 export const getGroupLink = async (groupLink: string) => {
-  return await GROUP.findOne({groupLink}).exec();
+  const r = await GROUP.countDocuments({groupLink}).exec();
+  return r > 0;
 };
