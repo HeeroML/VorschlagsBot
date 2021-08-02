@@ -45,8 +45,11 @@ groupName: string,
 groupLink: string,
 groupDescription: string,
 groupCategorie: number,
-groupType: string) =>
+groupType: string) => {
+
+console.log("Group Add called: " + groupID, userId, groupName, groupLink, groupDescription, groupCategorie, groupType)
   GROUP.updateOne({}, { groupID, userId, groupName, groupLink, groupDescription, groupCategorie, groupType }, { upsert: true });
+}
 
 export const getGroupID = async (groupID: number) => {
   return await GROUP.findOne({groupID}).exec();
