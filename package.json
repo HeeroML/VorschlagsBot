@@ -1,6 +1,6 @@
 {
   "name": "vorschlagsbot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Telegram bot that handles updates of @gruppen List.",
   "main": "dist",
   "engines": {
