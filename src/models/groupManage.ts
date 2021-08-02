@@ -63,5 +63,5 @@ export const getGroupID = async (groupID: number) => {
 export const getGroupLink = async (groupLink: string) => {
   const r = await GROUP.countDocuments({groupLink}).exec();
   console.log("R " + r + " String: " + groupLink)
-  return r > 0;
+  return r > 1;
 };
