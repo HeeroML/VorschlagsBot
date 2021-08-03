@@ -1,4 +1,4 @@
-import { Bot, session } from "grammy";
+import {Bot, GrammyError, HttpError, session} from "grammy";
 import env from "../env";
 import handlers from "./handlers";
 import type { MyContext, SessionData } from "./types/bot";
@@ -30,7 +30,18 @@ bot.on("callback_query", async (ctx: MyContext) => {
   await ctx.deleteMessage();
   await ctx.answerCallbackQuery();
 });
-
+bot.catch((err) => {
+  const ctx = err.ctx;
+  console.error(`Error while handling update ${ctx.update.update_id}:`);
+  const e = err.error;
+  if (e instanceof GrammyError) {
+    console.error("Error in request:", e.description);
+  } else if (e instanceof HttpError) {
+    console.error("Could not contact Telegram:", e);
+  } else {
+    console.error("Unknown error:", e);
+  }
+});
 export default async () => {
   const app = express();
   const port = "8080";
