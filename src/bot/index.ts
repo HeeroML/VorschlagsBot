@@ -39,7 +39,7 @@ bot.catch((err) => {
   } else if (e instanceof HttpError) {
     console.error("Could not contact Telegram:", e);
   } else {
-    console.error("Unknown error:", e);
+    console.error("Unknown error:", e , "\n CTX: ", ctx);
   }
 });
 export default async () => {
@@ -51,5 +51,5 @@ export default async () => {
   app.listen(port, () => {
     console.log(`Health Check Working ${env.DOMAIN}:${port}`);
   });
-  bot.start({ drop_pending_updates: true });
+  await bot.start({drop_pending_updates: true});
 };
