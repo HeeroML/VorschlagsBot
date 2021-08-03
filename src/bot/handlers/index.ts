@@ -9,7 +9,7 @@ import { MyContext } from "../types/bot";
 const composer = new Composer<MyContext>();
 composer.use(start);
 composer.use(commands);
-composer.on("my_chat_member:chat", ctx => console.log("Added to chat: " + ctx.myChatMember))
+composer.on("my_chat_member", ctx => console.log("Added to chat: " + ctx.myChatMember))
 composer
   .filter((ctx: MyContext) => ctx.session.wizard == "group.add")
   .use(groupAdd);
