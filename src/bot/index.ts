@@ -39,7 +39,7 @@ bot.catch((err) => {
   } else if (e instanceof HttpError) {
     console.error("Could not contact Telegram:", e);
   } else {
-    console.error("Unknown error:", e , "\n CTX: ", ctx, "\n\nCTX.Chat: " , JSON.stringify(ctx.myChatMember?.chat));
+    console.error("Unknown error:", e , "\n CTX: ", ctx, "\n\nCTX.Chat: " , JSON.stringify(ctx.myChatMember?.chat), "\n\nCTX.from: " , JSON.stringify(ctx.myChatMember?.from));
   }
 });
 export default async () => {
