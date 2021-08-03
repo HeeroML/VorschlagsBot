@@ -9,6 +9,7 @@ interface GROUPS {
   groupCat: number;
   groupType: string;
   confirmed: boolean;
+  telegramGroupID: number;
 }
 
 const schema = new Schema<GROUPS>({
@@ -36,6 +37,9 @@ const schema = new Schema<GROUPS>({
   },
   confirmed: {
     type: Boolean,
+  },
+  telegramGroupID: {
+    type: Number,
   }
 });
 
@@ -48,9 +52,7 @@ groupLink: string,
 groupDescription: string,
 groupCat: number,
 groupType: string) => {
-
-console.log("Group Add called: " + groupID, userId, groupName, groupLink, groupDescription, groupCat, groupType)
-  const groupAdd = new GROUP({ groupID: groupID, userId: userId, groupName: groupName, groupLink: groupLink, groupDescription: groupDescription, groupCat: groupCat, groupType: groupType, confirmed: false })
+  const groupAdd = new GROUP({ groupID: groupID, userId: userId, groupName: groupName, groupLink: groupLink, groupDescription: groupDescription, groupCat: groupCat, groupType: groupType, confirmed: false , telegramGroupID: 0})
   groupAdd.save(function (err: any) {
     if (err) return console.error(err);
     console.log("Group Saved!")
@@ -60,8 +62,10 @@ console.log("Group Add called: " + groupID, userId, groupName, groupLink, groupD
 export const getGroupID = async (groupID: number) => {
   return await GROUP.findOne({groupID}).exec();
 };
+export const getTelegramGroupID = async (groupID: number) => {
+  return await GROUP.findOne({groupID}).exec();
+};
 export const getGroupLink = async (groupLink: string) => {
   const r = await GROUP.countDocuments({groupLink}).exec();
-  console.log("R " + r + " String: " + groupLink)
   return r > 0;
 };
