@@ -16,7 +16,7 @@ composer.on("message:text").filter(
         await ctx.reply(
             `<b>Dein Link ist nicht gültig</>
 Sende den Link in dem Format: 
-<i>https:t.me/</>`,
+<i>https://t.me/</>`,
             {
                 parse_mode: "HTML",
                 disable_web_page_preview: true,
@@ -33,7 +33,7 @@ composer.on("message::url").filter(
         await ctx.reply(
             `<b>Dein Link ist keine t.me Url</>
 Sende den Link in dem Format: 
-<i>https:t.me/</>`,
+<i>https://t.me/</>`,
             {
                 parse_mode: "HTML",
                 disable_web_page_preview: true,
