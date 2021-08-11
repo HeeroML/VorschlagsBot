@@ -42,3 +42,5 @@ export const groupArray = [
     "-1001051683067",
   ],
 ];
+
+export const ListChannel: number = -1001545745573

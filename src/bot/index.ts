@@ -1,29 +1,42 @@
-import {Bot, GrammyError, HttpError, session} from "grammy";
+import {Bot, Context, GrammyError, HttpError, session} from "grammy";
+import {run, sequentialize} from "@grammyjs/runner";
 import env from "../env";
 import handlers from "./handlers";
-import type { MyContext, SessionData } from "./types/bot";
+import type {MyContext, SessionData} from "./types/bot";
 import express from "express";
+
 const bot = new Bot<MyContext>(env.TOKEN);
+
+function getSessionKey(ctx: Context) {
+  if (ctx.chat) {
+    return (ctx.chat?.id).toString()
+  } else if (ctx.myChatMember?.chat) {
+    return (ctx.myChatMember?.chat?.id).toString()
+  }
+}
+
+bot.use(sequentialize(getSessionKey));
 bot.use(
-  session({
-    initial(): SessionData {
-      return {
-        page: 0,
-        groupID: "",
-        groupName: "string",
-        message_id: 0,
-        userID: 0,
-        match: undefined,
-        token: undefined,
-        wizard: "start",
-        step: 0,
-        groupLink: "none",
-        groupType: "none",
-        categoryId: 100,
-        groupDescription: "",
-      };
-    },
-  })
+    session({
+      initial(): SessionData {
+        return {
+          page: 0,
+          groupID: "",
+          groupName: "string",
+          message_id: 0,
+          userID: 0,
+          match: undefined,
+          token: undefined,
+          wizard: "start",
+          step: 0,
+          groupLink: "none",
+          groupType: "none",
+          categoryId: 100,
+          groupDescription: "",
+        };
+      },
+      getSessionKey: getSessionKey
+    })
 );
 bot.use(handlers);
 bot.on("callback_query", async (ctx: MyContext) => {
@@ -39,7 +52,7 @@ bot.catch((err) => {
   } else if (e instanceof HttpError) {
     console.error("Could not contact Telegram:", e);
   } else {
-    console.error("Unknown error:", e , "\n CTX: ", ctx, "\n\nCTX.Chat: " , JSON.stringify(ctx.myChatMember?.chat), "\n\nCTX.from: " , JSON.stringify(ctx.myChatMember?.from));
+    console.error("Unknown error:", e, "\n CTX: ", ctx, "\n\nCTX.Chat: ", JSON.stringify(ctx.myChatMember?.chat), "\n\nCTX.from: ", JSON.stringify(ctx.myChatMember?.from));
   }
 });
 export default async () => {
@@ -51,5 +64,6 @@ export default async () => {
   app.listen(port, () => {
     console.log(`Health Check Working ${env.DOMAIN}:${port}`);
   });
-  await bot.start({drop_pending_updates: true});
+  await bot.api.deleteWebhook({drop_pending_updates: true})
+  run(bot)
 };

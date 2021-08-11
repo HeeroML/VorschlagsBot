@@ -1,6 +1,6 @@
 {
   "name": "vorschlagsbot",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Telegram bot that handles updates of @gruppen List.",
   "main": "dist",
   "engines": {
@@ -21,6 +21,7 @@
   },
   "homepage": "https://t.me/gruppen",
   "dependencies": {
+    "@grammyjs/runner": "^1.0.2",
     "cheerio": "^1.0.0-rc.10",
     "dotenv": "^10.0.0",
     "envalid": "^7.1.1",
