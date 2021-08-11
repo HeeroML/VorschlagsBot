@@ -1,22 +1,17 @@
-import { Composer } from "grammy";
+import {Composer} from "grammy";
 import isUrlExists from "url-exists-nodejs";
-import {
-  getDeleteMarkup,
-  getMainMenu,
-  nanoid,
-  templatePost,
-} from "../../helpers";
-import { MyContext } from "../types/bot";
+import {getDeleteMarkup, getMainMenu, templatePost,} from "../../helpers";
+import {MyContext} from "../types/bot";
 //@ts-ignore
 import meta from "meta-grabber";
 
 const composer = new Composer<MyContext>();
 
 composer.on("message:text").filter(
-  async (ctx) =>
-    ctx.session.step == 1 && !(await isUrlExists(ctx.message.text.toString())),
-  async (ctx: MyContext) => {
-    await ctx.reply(
+    async (ctx) =>
+        ctx.session.step == 1 && !(await isUrlExists(ctx.message.text.toString())),
+    async (ctx: MyContext) => {
+        await ctx.reply(
       `<b>Dein Link ist nicht gültig</>
 Sende den Link in dem Format: 
 <i>https:t.me/</>`,
@@ -99,9 +94,9 @@ composer.on("callback_query").filter(
         `✅ Gruppe erfolgreich gelöscht.
         
 Ich kann deine Gruppen verwalten für @gruppen!`,
-        {
-          reply_markup: await getMainMenu(ctx),
-        }
+          {
+              reply_markup: await getMainMenu(),
+          }
       );
     } else if (ctx.callbackQuery?.data == "channelAddNo") {
       ctx.session.wizard = "start";
@@ -115,9 +110,9 @@ Ich kann deine Gruppen verwalten für @gruppen!`,
         `❌ Gruppe nicht gelöscht.
         
 Ich kann deine Gruppen verwalten für @gruppen!`,
-        {
-          reply_markup: await getMainMenu(ctx),
-        }
+          {
+              reply_markup: await getMainMenu(),
+          }
       );
     }
   }
