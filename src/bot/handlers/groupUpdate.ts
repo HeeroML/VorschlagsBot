@@ -164,7 +164,7 @@ composer.on("callback_query").filter(
     async (ctx: MyContext) => {
         await ctx.answerCallbackQuery();
         await ctx.deleteMessage();
-        if (ctx.callbackQuery?.data?.includes("channelUpdate.") && ctx.from) {
+        if (ctx.callbackQuery?.data?.includes("channelAdd.") && ctx.from) {
             createGroup(ctx.session.groupID, ctx.from.id, ctx.session.groupName, ctx.session.groupLink, ctx.session.groupDescription, ctx.session.categoryId, ctx.session.groupType)
             ctx
                 .reply(await templatePost(ctx), {

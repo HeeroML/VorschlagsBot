@@ -1,5 +1,5 @@
-import { Composer, InlineKeyboard } from "grammy";
-import { MyContext } from "../types/bot";
+import {Composer, InlineKeyboard} from "grammy";
+import {MyContext} from "../types/bot";
 
 const composer = new Composer<MyContext>();
 
@@ -15,7 +15,7 @@ composer.command("start", async (ctx: MyContext) => {
       .row()
       .text("Gruppe updaten", "group.update")
       .row()
-      .text("Gruppe löschen", "group.delete"),
+    //.text("Gruppe löschen", "group.delete"),
   });
 });
 
