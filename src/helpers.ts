@@ -1,16 +1,17 @@
-import { InlineKeyboard } from "grammy";
-import { groupArray } from "./bot/config/categories";
-import { MyContext } from "./bot/types/bot";
-import { customAlphabet } from "nanoid";
+import {InlineKeyboard} from "grammy";
+import {groupArray} from "./bot/config/categories";
+import {MyContext} from "./bot/types/bot";
+import {customAlphabet} from "nanoid";
+
 const alphabet =
-  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 export const nanoid = customAlphabet(alphabet, 10);
 
 export const getAddConfirmMarkup = async (
-  ctx: MyContext
+    ctx: MyContext
 ): Promise<InlineKeyboard> => {
   return new InlineKeyboard()
-    .text("Ja", "channelAdd." + ctx.session.categoryId)
+      .text("Ja", "channelAdd." + ctx.session.categoryId)
     .text("Nein", "channelAddNo");
 };
 export const getDeleteMarkup = async (
@@ -21,13 +22,13 @@ export const getDeleteMarkup = async (
     .text("Nein", "channelDeleteNo");
 };
 
-export const getMainMenu = async (ctx: MyContext): Promise<InlineKeyboard> => {
+export const getMainMenu = async (): Promise<InlineKeyboard> => {
   return new InlineKeyboard()
-    .text("Gruppe hinzufügen", "group.add")
-    .row()
-    .text("Gruppe aktualisieren", "group.update")
-    .row()
-    .text("Gruppe löschen", "group.delete");
+      .text("Gruppe hinzufügen", "group.add")
+      .row()
+      .text("Gruppe aktualisieren", "group.update")
+      .row()
+  //.text("Gruppe löschen", "group.delete");
 };
 
 export const getCategoriesMarkup = async (): Promise<InlineKeyboard> => {
@@ -85,7 +86,7 @@ export async function templatePost(ctx: MyContext) {
   } else {
     textType = "Gruppe: ";
   }
-  const text = `<b>${ctx.session.groupName}</>
+  return `<b>${ctx.session.groupName}</>
 Beschreibung: ${ctx.session.groupDescription}
 
 ${textType} ${ctx.session.groupLink}
@@ -97,9 +98,7 @@ ID: <code>${ctx.session.groupID}</code>
 🌷➖➖➖➖➖➖
 Unsere Übersicht: @gruppen
 Kategorie: <a href="${groupArray[1][ctx.session.categoryId]}">${
-    groupArray[0][ctx.session.categoryId]
+      groupArray[0][ctx.session.categoryId]
   }</a>
 ➖➖➖➖➖➖🌷`;
-
-  return text;
 }

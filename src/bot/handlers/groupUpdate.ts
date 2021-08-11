@@ -80,7 +80,7 @@ Wähle nun ob dein Link eine Gruppe oder Kanal ist!`,
 
 Bitte starte den Prozess neu!`,
                 {
-                    reply_markup: await getMainMenu(ctx),
+                    reply_markup: await getMainMenu(),
                     parse_mode: "HTML",
                     disable_web_page_preview: true,
                 }
@@ -173,7 +173,9 @@ composer.on("callback_query").filter(
                 })
                 .then(async () => {
                     if (ctx.from) await ctx.api.sendMessage(ListChannel, "Update von: @" + ctx.from.username + "\nErster Name: " + ctx.from.first_name + "\nTelegramID: " + ctx.from.id)
-                    await ctx.api.sendMessage(ListChannel, await templatePost(ctx))
+                    await ctx.api.sendMessage(ListChannel, await templatePost(ctx), {
+                        parse_mode: "HTML",
+                    })
 
                     ctx.session.wizard = "start";
                     ctx.session.step = 0;
@@ -191,7 +193,7 @@ composer.on("callback_query").filter(
         
 Ich kann deine Gruppen verwalten für @gruppen!`,
                 {
-                    reply_markup: await getMainMenu(ctx),
+                    reply_markup: await getMainMenu(),
                 }
             );
         } else if (ctx.callbackQuery?.data == "channelAddNo") {
@@ -207,7 +209,7 @@ Ich kann deine Gruppen verwalten für @gruppen!`,
         
 Ich kann deine Gruppen verwalten für @gruppen!`,
                 {
-                    reply_markup: await getMainMenu(ctx),
+                    reply_markup: await getMainMenu(),
                 }
             );
         }
