@@ -7,12 +7,12 @@ import groupAddBot from "./groupAddBot";
 import groupDelete from "./groupDelete";
 import groupUpdate from "./groupUpdate";
 import {MyContext} from "../types/bot";
-import {ListChannel} from "../config/categories";
-import adminCommands from "./adminCommands";
+//import {ListChannel} from "../config/categories";
+//import adminCommands from "./adminCommands";
 
 const composer = new Composer<MyContext>();
 composer.use(start);
-composer.filter((ctx) => ctx.chat?.id == ListChannel).use(adminCommands);
+//composer.filter((ctx) => ctx.chat?.id == ListChannel).use(adminCommands);
 composer.filter((ctx) => ctx.chat?.type == "private").use(commands);
 composer.on("my_chat_member").filter((ctx) => ctx.chat?.type == "private").use(groupAddBot)
 composer
