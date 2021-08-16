@@ -30,6 +30,13 @@ export const ConfirmGroupAdd = async (
       .text("Nein", "channelAddAdminNo." + ctx.session.groupID);
 };
 
+export const LikeButton = async (
+    ctx: MyContext
+): Promise<InlineKeyboard> => {
+  return new InlineKeyboard()
+      .text("♥️", "like." + ctx.session.groupID)
+};
+
 export const getMainMenu = async (): Promise<InlineKeyboard> => {
   return new InlineKeyboard()
       .text("Gruppe hinzufügen", "group.add")

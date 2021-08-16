@@ -10,6 +10,7 @@ interface GROUPS {
     groupType: string;
     confirmed: boolean;
     telegramGroupID: number;
+    likes: number;
 }
 
 const schema = new Schema<GROUPS>({
@@ -39,6 +40,9 @@ const schema = new Schema<GROUPS>({
         type: Boolean,
     },
     telegramGroupID: {
+        type: Number,
+    },
+    likes: {
         type: Number,
     }
 });

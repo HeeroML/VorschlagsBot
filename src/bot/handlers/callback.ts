@@ -37,4 +37,11 @@ Sende den Link in dem Format:
   });
 });
 
+composer.on("callback_query").filter(
+    // @ts-ignore
+    (ctx) => (ctx.callbackQuery.data).includes("like."),
+    async (ctx) => {
+      console.log(JSON.stringify(ctx.message))
+    });
+
 export default composer;
