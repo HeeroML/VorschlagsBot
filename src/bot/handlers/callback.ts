@@ -1,5 +1,6 @@
 import {Composer} from "grammy";
 import {MyContext} from "../types/bot";
+import {likePressed} from "../../models/groupManage";
 
 const composer = new Composer<MyContext>();
 
@@ -37,11 +38,13 @@ Sende den Link in dem Format:
   });
 });
 
-composer.on("callback_query").filter(
+composer.on("callback_query:data").filter(
     // @ts-ignore
     (ctx) => (ctx.callbackQuery.data).includes("like."),
     async (ctx) => {
-      console.log("Like Pressed:" + JSON.stringify(ctx.callbackQuery))
+      const groupID = (ctx.callbackQuery.data).replace("like.", "")
+      const likes = await likePressed(groupID)
+      console.log("Like " + likes + " Pressed:" + JSON.stringify(ctx.callbackQuery))
     });
 
 export default composer;

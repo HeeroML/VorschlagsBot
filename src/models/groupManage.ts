@@ -74,7 +74,11 @@ export const createGroup = (groupID: string,
         console.log("Group Saved!")
     });
 }
-
+export const likePressed = async (groupID: string) => {
+    const update = {$inc: {likes: 1}};
+    const groupData = await GROUP.findOneAndUpdate({groupID}, update).exec();
+    return groupData.likes
+};
 export const getGroupID = async (groupID: number) => {
     return await GROUP.findOne({groupID}).exec();
 };
