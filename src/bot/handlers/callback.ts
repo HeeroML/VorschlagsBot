@@ -41,7 +41,7 @@ composer.on("callback_query").filter(
     // @ts-ignore
     (ctx) => (ctx.callbackQuery.data).includes("like."),
     async (ctx) => {
-      console.log(JSON.stringify(ctx.message))
+      console.log("Like Pressed:" + JSON.stringify(ctx.callbackQuery))
     });
 
 export default composer;
