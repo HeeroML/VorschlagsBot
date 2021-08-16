@@ -14,6 +14,7 @@ const composer = new Composer<MyContext>();
 composer.use(start);
 //composer.filter((ctx) => ctx.chat?.id == ListChannel).use(adminCommands);
 composer.filter((ctx) => ctx.chat?.type == "private").use(commands);
+composer.on("callback_query").use(callback);
 composer.on("my_chat_member").filter((ctx) => ctx.chat?.type == "private").use(groupAddBot)
 composer
     .filter((ctx) => ctx.session.wizard == "group.add")
@@ -25,6 +26,5 @@ composer
     .filter((ctx) => ctx.session.wizard == "group.update")
     .use(groupUpdate);
 composer.filter((ctx) => ctx.chat?.type == "private").use(commands);
-composer.on("callback_query").use(callback);
 
 export default composer;

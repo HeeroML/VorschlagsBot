@@ -4,6 +4,15 @@ import {likePressed} from "../../models/groupManage";
 
 const composer = new Composer<MyContext>();
 
+composer.on("callback_query:data").filter(
+    // @ts-ignore
+    (ctx) => (ctx.callbackQuery.data).includes("like."),
+    async (ctx) => {
+      const groupID = (ctx.callbackQuery.data).replace("like.", "")
+      const likes = await likePressed(groupID)
+      console.log("Like " + likes + " Pressed:" + JSON.stringify(ctx.callbackQuery))
+    });
+
 composer.callbackQuery("group.add", async (ctx) => {
   await ctx.deleteMessage();
   ctx.session.wizard = "group.add";
@@ -38,13 +47,5 @@ Sende den Link in dem Format:
   });
 });
 
-composer.on("callback_query:data").filter(
-    // @ts-ignore
-    (ctx) => (ctx.callbackQuery.data).includes("like."),
-    async (ctx) => {
-      const groupID = (ctx.callbackQuery.data).replace("like.", "")
-      const likes = await likePressed(groupID)
-      console.log("Like " + likes + " Pressed:" + JSON.stringify(ctx.callbackQuery))
-    });
 
 export default composer;
