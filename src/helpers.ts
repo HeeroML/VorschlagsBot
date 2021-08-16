@@ -12,14 +12,22 @@ export const getAddConfirmMarkup = async (
 ): Promise<InlineKeyboard> => {
   return new InlineKeyboard()
       .text("Ja", "channelAdd." + ctx.session.categoryId)
-    .text("Nein", "channelAddNo");
+      .text("Nein", "channelAddNo");
 };
 export const getDeleteMarkup = async (
-  ctx: MyContext
+    ctx: MyContext
 ): Promise<InlineKeyboard> => {
   return new InlineKeyboard()
-    .text("Ja", "channelDelete." + ctx.session.groupID)
-    .text("Nein", "channelDeleteNo");
+      .text("Ja", "channelDelete." + ctx.session.groupID)
+      .text("Nein", "channelDeleteNo");
+};
+
+export const ConfirmGroupAdd = async (
+    ctx: MyContext
+): Promise<InlineKeyboard> => {
+  return new InlineKeyboard()
+      .text("Ja", "channelAddAdmin." + ctx.session.groupID)
+      .text("Nein", "channelAddAdminNo." + ctx.session.groupID);
 };
 
 export const getMainMenu = async (): Promise<InlineKeyboard> => {

@@ -3,7 +3,7 @@ import {MyContext} from "../types/bot";
 
 const composer = new Composer<MyContext>();
 
-composer.command("start", async (ctx: MyContext) => {
+composer.command("start", async (ctx) => {
   if (ctx.chat?.type != "private") {
     return await ctx.reply("Ich bin am Leben!");
   }
@@ -11,9 +11,9 @@ composer.command("start", async (ctx: MyContext) => {
   ctx.session.step = 1;
   return await ctx.reply(`Ich kann deine Gruppen verwalten für @gruppen!`, {
     reply_markup: new InlineKeyboard()
-      .text("Gruppe hinzufügen", "group.add")
-      .row()
-      .text("Gruppe updaten", "group.update")
+        .text("Gruppe hinzufügen", "group.add")
+        .row()
+        .text("Gruppe aktualisieren", "group.update")
       .row()
     //.text("Gruppe löschen", "group.delete"),
   });

@@ -1,6 +1,13 @@
 import {Composer, InlineKeyboard} from "grammy";
 import isUrlExists from "url-exists-nodejs";
-import {getAddConfirmMarkup, getCategoriesMarkup, getMainMenu, nanoid, templatePost,} from "../../helpers";
+import {
+    ConfirmGroupAdd,
+    getAddConfirmMarkup,
+    getCategoriesMarkup,
+    getMainMenu,
+    nanoid,
+    templatePost,
+} from "../../helpers";
 import {groupArray, ListChannel} from "../config/categories";
 import {MyContext} from "../types/bot";
 //@ts-ignore
@@ -12,7 +19,7 @@ const composer = new Composer<MyContext>();
 composer.on("message:text").filter(
     async (ctx) =>
         ctx.session.step == 1 && !(await isUrlExists(ctx.message.text.toString())),
-    async (ctx: MyContext) => {
+    async (ctx) => {
         await ctx.reply(
             `<b>Dein Link ist nicht gültig</>
 Sende den Link in dem Format: 
@@ -47,9 +54,7 @@ composer.on("message::url").filter(
         ctx.session.step == 1 && //@ts-ignore
         (await isUrlExists(ctx.message.text.toString())) && //@ts-ignore
         ctx.message.text.toString().includes("t.me"),
-    async (ctx: MyContext) => {
-        //@ts-ignore
-        console.log(`R Test: ${await getGroupLink(ctx.message.text)}`)
+    async (ctx) => {
         if (ctx.message?.text && !await getGroupLink(ctx.message.text)) {
             ctx.session.wizard = "group.add";
             ctx.session.step = 2;
@@ -60,11 +65,11 @@ composer.on("message::url").filter(
             await ctx.reply(
                 `<b>Dein Link: ${ctx.message?.text}</>
       
-Wähle nun ob dein Link eine Gruppe oder Kanal ist!`,
+Wähle nun ob du eine eigenen Beschreibung eingeben willst!`,
                 {
                     reply_markup: new InlineKeyboard()
-                        .text("Kanal", "group.channel")
-                        .text("Gruppe", "group.group"),
+                        .text("Eigene Beschreibung", "group.description")
+                        .text("Keine Beschreibung", "group.no.description"),
                     parse_mode: "HTML",
                     disable_web_page_preview: true,
                 }
@@ -90,11 +95,59 @@ Bitte starte den Prozess neu!`,
         }
     }
 );
+
 composer.on("callback_query").filter(
     (ctx) => ctx.session.step == 2,
-    async (ctx: MyContext) => {
+    async (ctx) => {
         ctx.session.wizard = "group.add";
-        ctx.session.step = 3;
+        await ctx.answerCallbackQuery({text: "Antwort erhalten"});
+        await ctx.deleteMessage();
+        if (ctx.callbackQuery?.data == "group.description") {
+            ctx.session.step = 3;
+            await ctx.reply(
+                `<b>Sende mir jetzt deine Beschreibung. Schicke dazu einfach eine Textnachricht.</>`,
+                {
+                    parse_mode: "HTML",
+                    disable_web_page_preview: true,
+                }
+            );
+        } else {
+            ctx.session.step = 4;
+            await ctx.reply(
+                `Wähle nun ob dein Link eine Gruppe oder Kanal ist!`,
+                {
+                    reply_markup: new InlineKeyboard()
+                        .text("Kanal", "group.channel")
+                        .text("Gruppe", "group.group"),
+                    parse_mode: "HTML",
+                    disable_web_page_preview: true,
+                }
+            );
+        }
+    })
+
+composer.on("message:text").filter(
+    (ctx) => ctx.session.step == 3,
+    async (ctx) => {
+        ctx.session.step = 4;
+        ctx.session.groupDescription = ctx.message.text
+        await ctx.reply(
+            `Wähle nun ob dein Link eine Gruppe oder Kanal ist!`,
+            {
+                reply_markup: new InlineKeyboard()
+                    .text("Kanal", "group.channel")
+                    .text("Gruppe", "group.group"),
+                parse_mode: "HTML",
+                disable_web_page_preview: true,
+            }
+        );
+    })
+
+composer.on("callback_query").filter(
+    (ctx) => ctx.session.step == 4,
+    async (ctx) => {
+        ctx.session.wizard = "group.add";
+        ctx.session.step = 5;
         await ctx.answerCallbackQuery({text: "Antwort erhalten"});
         await ctx.deleteMessage();
         const menu = await getCategoriesMarkup();
@@ -108,7 +161,7 @@ composer.on("callback_query").filter(
                     disable_web_page_preview: true,
                 }
             );
-        } else {
+        } else if (ctx.callbackQuery?.data == "group.channel") {
             ctx.session.groupType = "Channel";
             await ctx.reply(
                 `<b>In welcher Kategorie würdest du deinen Kanal einordnen?</>`,
@@ -123,10 +176,10 @@ composer.on("callback_query").filter(
 );
 
 composer.on("callback_query").filter(
-    (ctx) => ctx.session.step == 3,
-    async (ctx: MyContext) => {
+    (ctx) => ctx.session.step == 5,
+    async (ctx) => {
         ctx.session.wizard = "group.add";
-        ctx.session.step = 4;
+        ctx.session.step = 6;
         ctx.session.groupID = nanoid();
         await ctx.deleteMessage();
         await ctx.answerCallbackQuery({text: "Antwort erhalten"});
@@ -162,11 +215,11 @@ ${ctx.session.groupDescription}
 );
 
 composer.on("callback_query").filter(
-    (ctx) => ctx.session.step == 4,
-    async (ctx: MyContext) => {
+    (ctx) => ctx.session.step == 6,
+    async (ctx) => {
         await ctx.answerCallbackQuery();
         await ctx.deleteMessage();
-        if (ctx.callbackQuery?.data?.includes("channelAdd.") && ctx.from) {
+        if (ctx.callbackQuery?.data?.includes("channelAdd.")) {
             createGroup(ctx.session.groupID, ctx.from.id, ctx.session.groupName, ctx.session.groupLink, ctx.session.groupDescription, ctx.session.categoryId, ctx.session.groupType)
             ctx
                 .reply(await templatePost(ctx), {
@@ -174,12 +227,12 @@ composer.on("callback_query").filter(
                     disable_web_page_preview: true,
                 })
                 .then(async () => {
-                    if (ctx.from)
-                        await ctx.api.sendMessage(ListChannel, "Neuer Eintrag von: @" + ctx.from.username + "\nErster Name: " + ctx.from.first_name + "\nTelegramID: " + ctx.from.id)
+                    const menu = await ConfirmGroupAdd(ctx);
+                    await ctx.api.sendMessage(ListChannel, "Neuer Eintrag von: @" + ctx.from.username + "\nErster Name: " + ctx.from.first_name + "\nTelegramID: tg://user?id=" + ctx.from.id)
                     await ctx.api.sendMessage(ListChannel, await templatePost(ctx), {
+                        reply_markup: menu,
                         parse_mode: "HTML",
                     })
-
                     ctx.session.wizard = "start";
                     ctx.session.step = 0;
                     ctx.session.groupLink = "none";

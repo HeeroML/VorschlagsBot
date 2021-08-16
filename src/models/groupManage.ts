@@ -63,6 +63,7 @@ export const createGroup = (groupID: string,
         confirmed: false,
         telegramGroupID: 0,
         telegramMessageID: 0,
+        likes: 0,
     })
     groupAdd.save(function (err: any) {
         if (err) return console.error(err);

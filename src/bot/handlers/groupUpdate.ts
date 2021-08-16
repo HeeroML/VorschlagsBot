@@ -12,7 +12,7 @@ const composer = new Composer<MyContext>();
 composer.on("message:text").filter(
     async (ctx) =>
         ctx.session.step == 1 && !(await isUrlExists(ctx.message.text.toString())),
-    async (ctx: MyContext) => {
+    async (ctx) => {
         await ctx.reply(
             `<b>Dein Link ist nicht gültig</>
 Sende den Link in dem Format: 
@@ -29,7 +29,7 @@ composer.on("message::url").filter(
     async (ctx) =>
         ctx.session.step == 1 && //@ts-ignore
         !ctx.message.text.includes("t.me"),
-    async (ctx: MyContext) => {
+    async (ctx) => {
         await ctx.reply(
             `<b>Dein Link ist keine t.me Url</>
 Sende den Link in dem Format: 
@@ -47,7 +47,7 @@ composer.on("message::url").filter(
         ctx.session.step == 1 && //@ts-ignore
         (await isUrlExists(ctx.message.text.toString())) && //@ts-ignore
         ctx.message.text.toString().includes("t.me"),
-    async (ctx: MyContext) => {
+    async (ctx) => {
         if (ctx.message?.text && await getGroupLink(ctx.message.text)) {
             ctx.session.wizard = "group.update";
             ctx.session.step = 2;
@@ -90,7 +90,7 @@ Bitte starte den Prozess neu!`,
 );
 composer.on("callback_query").filter(
     (ctx) => ctx.session.step == 2,
-    async (ctx: MyContext) => {
+    async (ctx) => {
         ctx.session.wizard = "group.update";
         ctx.session.step = 3;
         await ctx.answerCallbackQuery({text: "Antwort erhalten"});
@@ -122,7 +122,7 @@ composer.on("callback_query").filter(
 
 composer.on("callback_query").filter(
     (ctx) => ctx.session.step == 3,
-    async (ctx: MyContext) => {
+    async (ctx) => {
         ctx.session.wizard = "group.update";
         ctx.session.step = 4;
         ctx.session.groupID = nanoid();
@@ -161,7 +161,7 @@ ${ctx.session.groupDescription}
 
 composer.on("callback_query").filter(
     (ctx) => ctx.session.step == 4,
-    async (ctx: MyContext) => {
+    async (ctx) => {
         await ctx.answerCallbackQuery();
         await ctx.deleteMessage();
         if (ctx.callbackQuery?.data?.includes("channelAdd.") && ctx.from) {
