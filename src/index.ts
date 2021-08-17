@@ -1,5 +1,5 @@
-import bot from "./bot";
 import connect from "./models";
+import bot from "./bot";
 
 (async () => {
   await connect();

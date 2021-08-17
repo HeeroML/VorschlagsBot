@@ -1,5 +1,5 @@
-import {Bot, Context, GrammyError, HttpError, session} from "grammy";
-import {run, sequentialize} from "@grammyjs/runner";
+import {Bot, GrammyError, HttpError, session} from "grammy";
+import {run} from "@grammyjs/runner";
 import env from "../env";
 import handlers from "./handlers";
 import type {MyContext, SessionData} from "./types/bot";
@@ -7,15 +7,6 @@ import express from "express";
 
 const bot = new Bot<MyContext>(env.TOKEN);
 
-function getSessionKey(ctx: Context) {
-  if (ctx.chat) {
-    return (ctx.chat?.id).toString()
-  } else if (ctx.myChatMember?.chat) {
-    return (ctx.myChatMember?.chat?.id).toString()
-  }
-}
-
-bot.use(sequentialize(getSessionKey));
 bot.use(
     session({
       initial(): SessionData {
@@ -35,7 +26,6 @@ bot.use(
           groupDescription: "",
         };
       },
-      getSessionKey: getSessionKey
     })
 );
 bot.use(handlers);
@@ -43,6 +33,7 @@ bot.on("callback_query", async (ctx: MyContext) => {
   await ctx.deleteMessage();
   await ctx.answerCallbackQuery();
 });
+
 bot.catch((err) => {
   const ctx = err.ctx;
   console.error(`Error while handling update ${ctx.update.update_id}:`);
