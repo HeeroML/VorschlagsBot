@@ -17,7 +17,7 @@ const schema = new Schema<GROUPS>({
     groupID: {
         type: String,
         unique: true,
-    },
+    },// @ts-ignore
     userId: {
         type: Number,
     },
@@ -77,12 +77,15 @@ export const createGroup = (groupID: string,
 export const likePressed = async (groupID: string) => {
     const update = {$inc: {likes: 1}};
     const groupData = await GROUP.findOneAndUpdate({groupID}, update).exec();
+    // @ts-ignore
     return groupData.likes
 };
 export const getGroupID = async (groupID: number) => {
+    // @ts-ignore
     return await GROUP.findOne({groupID}).exec();
 };
 export const getTelegramGroupID = async (groupID: number) => {
+    // @ts-ignore
     return await GROUP.findOne({groupID}).exec();
 };
 export const getGroupLink = async (groupLink: string) => {
