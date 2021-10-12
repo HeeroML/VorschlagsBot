@@ -1,11 +1,11 @@
-import { config } from "dotenv";
-import { cleanEnv, str, num } from "envalid";
+import {config} from "dotenv";
+import {cleanEnv, num, str} from "envalid";
 
 config();
 
 export default cleanEnv(process.env, {
-  TOKEN: str(),
-  CACHE: num(),
-  MONGO: str(),
-  DOMAIN: str(),
+    TOKEN: str(),
+    CACHE: num(),
+    MONGO: str(),
+    DOMAIN: str(),
 });

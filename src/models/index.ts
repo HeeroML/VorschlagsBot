@@ -1,6 +1,5 @@
-import {connect, set} from "mongoose";
+import {CallbackWithoutResult, connect, set} from "mongoose";
 import env from "../env";
 
-export default () =>
-    connect(env.MONGO, {useUnifiedTopology: true, useNewUrlParser: true});
-set('useFindAndModify', false)
+export default (uri: string) =>
+    connect(env.MONGO, { });

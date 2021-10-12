@@ -1,6 +1,6 @@
 import {Composer, InlineKeyboard} from "grammy";
 import isUrlExists from "url-exists-nodejs";
-import {getAddConfirmMarkup, getCategoriesMarkup, getMainMenu, LikeButton, nanoid, templatePost,} from "../../helpers";
+import {getAddConfirmMarkup, getCategoriesMarkup, getMainMenu, nanoid, templatePost,} from "../../helpers";
 import {groupArray, ListChannel} from "../config/categories";
 import {MyContext} from "../types/bot";
 //@ts-ignore
@@ -220,10 +220,9 @@ composer.on("callback_query").filter(
                     disable_web_page_preview: true,
                 })
                 .then(async () => {
-                    const menu = await LikeButton(ctx);
+                    //const menu = await LikeButton(ctx);
                     await ctx.api.sendMessage(ListChannel, "Neuer Eintrag von: @" + ctx.from.username + "\nErster Name: " + ctx.from.first_name + "\nTelegramID: tg://user?id=" + ctx.from.id)
                     await ctx.api.sendMessage(ListChannel, await templatePost(ctx), {
-                        reply_markup: menu,
                         parse_mode: "HTML",
                     })
                     ctx.session.wizard = "start";
