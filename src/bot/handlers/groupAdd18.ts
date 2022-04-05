@@ -3,11 +3,13 @@ import isUrlExists from "../../urlexists";
 import {
   getAddConfirmMarkup,
   getCategoriesMarkup,
+  getCategoriesMarkup18,
   getMainMenu,
   nanoid,
   templatePost,
+  templatePost18,
 } from "../../helpers";
-import { groupArray, ListChannel } from "../config/categories";
+import { groupArray, groupArray18, ListChannel } from "../config/categories";
 import { MyContext } from "../types/bot";
 //@ts-ignore
 import meta from "meta-grabber";
@@ -55,7 +57,7 @@ composer.on("message::url").filter(
     ctx.message.text.toString().includes("t.me"),
   async (ctx) => {
     if (ctx.message?.text && !(await getGroupLink(ctx.message.text))) {
-      ctx.session.wizard = "group.add";
+      ctx.session.wizard = "group.add18";
       ctx.session.step = 2;
       ctx.session.groupLink = ctx.message.text;
       const objectTelegramMeta = meta(ctx.message?.text);
@@ -98,7 +100,7 @@ Bitte starte den Prozess neu!`,
 composer.on("callback_query").filter(
   (ctx) => ctx.session.step == 2,
   async (ctx) => {
-    ctx.session.wizard = "group.add";
+    ctx.session.wizard = "group.add18";
     await ctx.answerCallbackQuery({ text: "Antwort erhalten" });
     await ctx.deleteMessage();
     if (ctx.callbackQuery?.data == "group.description") {
@@ -141,11 +143,11 @@ composer.on("message:text").filter(
 composer.on("callback_query").filter(
   (ctx) => ctx.session.step == 4,
   async (ctx) => {
-    ctx.session.wizard = "group.add";
+    ctx.session.wizard = "group.add18";
     ctx.session.step = 5;
     await ctx.answerCallbackQuery({ text: "Antwort erhalten" });
     await ctx.deleteMessage();
-    const menu = await getCategoriesMarkup();
+    const menu = await getCategoriesMarkup18();
     if (ctx.callbackQuery?.data == "group.group") {
       ctx.session.groupType = "Group";
       await ctx.reply(
@@ -173,7 +175,7 @@ composer.on("callback_query").filter(
 composer.on("callback_query").filter(
   (ctx) => ctx.session.step == 5,
   async (ctx) => {
-    ctx.session.wizard = "group.add";
+    ctx.session.wizard = "group.add18";
     ctx.session.step = 6;
     ctx.session.groupID = nanoid();
     await ctx.deleteMessage();
@@ -197,7 +199,7 @@ composer.on("callback_query").filter(
 <i>Beschreibung:</>  
 ${ctx.session.groupDescription}
 
-<i>Kategorie:</> ${groupArray[0][ctx.session.categoryId]}
+<i>Kategorie:</> ${groupArray18[0][ctx.session.categoryId]}
   
 <b>Wilst du ${textGroup2} hinzufügen?</>`,
       {
@@ -233,14 +235,14 @@ composer.on("callback_query").filter(
           //const menu = await LikeButton(ctx);
           await ctx.api.sendMessage(
             ListChannel,
-            "Neuer Eintrag von: @" +
+            "🔞 Ü18 Neuer Eintrag von: @" +
               ctx.from.username +
               "\nErster Name: " +
               ctx.from.first_name +
               "\nTelegramID: tg://user?id=" +
               ctx.from.id
           );
-          await ctx.api.sendMessage(ListChannel, await templatePost(ctx), {
+          await ctx.api.sendMessage(ListChannel, await templatePost18(ctx), {
             parse_mode: "HTML",
           });
           ctx.session.wizard = "start";
@@ -256,7 +258,7 @@ composer.on("callback_query").filter(
         });
 
       await ctx.reply(
-        `✅ Gruppe erfolgreich hinzugefügt! Sie wird nun überprüft!
+        `✅ 🔞 Ü18 Gruppe erfolgreich hinzugefügt! Sie wird nun überprüft!
         
 Ich kann deine Gruppen verwalten für @gruppen!`,
         {
@@ -272,7 +274,7 @@ Ich kann deine Gruppen verwalten für @gruppen!`,
       ctx.session.groupName = "string";
       ctx.session.groupDescription = "";
       await ctx.reply(
-        `❌ Gruppe nicht hinzugefügt.
+        `❌ 🔞 Ü18 Gruppe nicht hinzugefügt.
         
 Ich kann deine Gruppen verwalten für @gruppen!`,
         {
