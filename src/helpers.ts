@@ -1,7 +1,7 @@
 import { InlineKeyboard } from "grammy";
 import { groupArray, groupArray18 } from "./bot/config/categories";
 import { MyContext } from "./bot/types/bot";
-import { customAlphabet } from "nanoid";
+import { customAlphabet } from "nanoid"
 
 const alphabet =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
