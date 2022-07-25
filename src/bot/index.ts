@@ -1,4 +1,4 @@
-import { Bot, GrammyError, HttpError, session } from "grammy";
+import { Bot, GrammyError, HttpError, session, webhookCallback} from "grammy";
 import { run } from "@grammyjs/runner";
 import env from "../env";
 import handlers from "./handlers";
@@ -55,16 +55,20 @@ bot.catch((err) => {
     );
   }
 });
-export default async () => {
-  const app = express();
-  const port = "8080";
-  app.get("/", (req, res) => {
-    res.sendStatus(200);
-  });
-  app.listen(port, () => {
-    console.log(`Health Check Working ${env.DOMAIN}:${port}`);
-  });
 
-  await bot.api.deleteWebhook({ drop_pending_updates: true });
-  run(bot);
+const domain = String(process.env.DOMAIN);
+const secretPath = String(process.env.BOT_TOKEN);
+const app = express();
+
+
+
+export default async () => {
+  app.use(express.json());
+app.use(`/${secretPath}`, webhookCallback(bot, "express"));
+
+app.listen(Number(process.env.PORT), async () => {
+  // Make sure it is `https` not `http`!
+  await bot.api.setWebhook(`https://${domain}/${secretPath}`);
+});
+bot.start()
 };
