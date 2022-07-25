@@ -1,13 +1,13 @@
 import { Composer } from "grammy";
-import start from "./start";
-import commands from "./commands";
-import callback from "./callback";
-import groupAdd from "./groupAdd";
-import groupAdd18 from "./groupAdd18";
-import groupAddBot from "./groupAddBot";
-import groupDelete from "./groupDelete";
-import groupUpdate from "./groupUpdate";
-import { MyContext } from "../types/bot";
+import start from "./start.js";
+import commands from "./commands.js";
+import callback from "./callback.js";
+import groupAdd from "./groupAdd.js";
+import groupAdd18 from "./groupAdd18.js";
+import groupAddBot from "./groupAddBot.js";
+import groupDelete from "./groupDelete.js";
+import groupUpdate from "./groupUpdate.js";
+import { MyContext } from "../types/bot.js";
 //import {ListChannel} from "../config/categories";
 //import adminCommands from "./adminCommands";
 

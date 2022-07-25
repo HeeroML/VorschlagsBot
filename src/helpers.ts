@@ -1,6 +1,6 @@
 import { InlineKeyboard } from "grammy";
-import { groupArray, groupArray18 } from "./bot/config/categories";
-import { MyContext } from "./bot/types/bot";
+import { groupArray, groupArray18 } from "./bot/config/categories.js";
+import { MyContext } from "./bot/types/bot.js";
 import { customAlphabet } from "nanoid"
 
 const alphabet =

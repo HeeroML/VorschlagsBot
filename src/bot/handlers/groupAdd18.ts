@@ -1,5 +1,5 @@
 import { Composer, InlineKeyboard } from "grammy";
-import isUrlExists from "../../urlexists";
+import isUrlExists from "../../urlexists.js";
 import {
   getAddConfirmMarkup,
   getCategoriesMarkup,
@@ -9,8 +9,8 @@ import {
   templatePost,
   templatePost18,
 } from "../../helpers";
-import { groupArray, groupArray18, ListChannel } from "../config/categories";
-import { MyContext } from "../types/bot";
+import { groupArray, groupArray18, ListChannel } from "../config/categories.js";
+import { MyContext } from "../types/bot.js";
 //@ts-ignore
 import meta from "meta-grabber";
 

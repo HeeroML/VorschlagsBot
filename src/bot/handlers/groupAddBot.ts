@@ -1,5 +1,5 @@
 import { Composer } from "grammy";
-import { MyContext } from "../types/bot";
+import { MyContext } from "../types/bot.js";
 //@ts-ignore
 import meta from "meta-grabber";
 

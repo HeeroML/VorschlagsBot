@@ -1,8 +1,8 @@
 import { Bot, GrammyError, HttpError, session, webhookCallback} from "grammy";
 import { run } from "@grammyjs/runner";
-import env from "../env";
-import handlers from "./handlers";
-import type { MyContext, SessionData } from "./types/bot";
+import env from "../env.js";
+import handlers from "./handlers/index.js";
+import type { MyContext, SessionData } from "./types/bot.js";
 import express from "express";
 
 const bot = new Bot<MyContext>(env.TOKEN);

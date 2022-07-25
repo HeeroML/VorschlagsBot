@@ -1,5 +1,5 @@
 import { Composer, InlineKeyboard } from "grammy";
-import { MyContext } from "../types/bot";
+import { MyContext } from "../types/bot.js";
 
 const composer = new Composer<MyContext>();
 

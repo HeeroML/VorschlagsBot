@@ -1,7 +1,7 @@
 import { Composer } from "grammy";
-import isUrlExists from "../../urlexists";
-import { getDeleteMarkup, getMainMenu, templatePost } from "../../helpers";
-import { MyContext } from "../types/bot";
+import isUrlExists from "../../urlexists.js";
+import { getDeleteMarkup, getMainMenu, templatePost } from "../../helpers.js";
+import { MyContext } from "../types/bot.js";
 //@ts-ignore
 import meta from "meta-grabber";
 
