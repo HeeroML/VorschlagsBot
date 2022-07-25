@@ -57,7 +57,7 @@ bot.catch((err) => {
 });
 
 const domain = String(process.env.DOMAIN);
-const secretPath = String(process.env.BOT_TOKEN);
+const secretPath = String(process.env.TOKEN);
 const app = express();
 
 
