@@ -20,6 +20,7 @@
     "url": "https://github.com/Tecardo1/GruppenBot/issues"
   },
   "homepage": "https://t.me/gruppen",
+  "type": "module",
   "dependencies": {
     "@grammyjs/runner": "^1.0.3",
     "cheerio": "^1.0.0-rc.12",
