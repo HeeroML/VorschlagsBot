@@ -68,7 +68,7 @@ app.use(`/${secretPath}`, webhookCallback(bot, "express"));
 
 app.listen(Number(process.env.PORT), async () => {
   // Make sure it is `https` not `http`!
-  await bot.api.setWebhook(`https://${domain}/${secretPath}`);
+  await bot.api.setWebhook(`${domain}${secretPath}`);
 });
 bot.start()
 };
