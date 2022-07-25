@@ -6,7 +6,7 @@ import {
   getMainMenu,
   nanoid,
   templatePost,
-} from "../../helpers";
+} from "../../helpers.js";
 import { groupArray, ListChannel } from "../config/categories.js";
 import { MyContext } from "../types/bot.js";
 //@ts-ignore

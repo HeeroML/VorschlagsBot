@@ -6,13 +6,13 @@ import {
   getMainMenu,
   nanoid,
   templatePost,
-} from "../../helpers";
+} from "../../helpers.js";
 import { groupArray, ListChannel } from "../config/categories.js";
 import { MyContext } from "../types/bot.js";
 //@ts-ignore
 import meta from "meta-grabber";
 
-const composer = new Composer<MyContext>();
+export const composer = new Composer<MyContext>();
 
 composer.on("message:text").filter(
   async (ctx) =>
@@ -281,5 +281,4 @@ Ich kann deine Gruppen verwalten für @gruppen!`,
     }
   }
 );
-
 export default composer;

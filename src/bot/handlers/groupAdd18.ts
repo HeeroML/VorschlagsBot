@@ -8,7 +8,7 @@ import {
   nanoid,
   templatePost,
   templatePost18,
-} from "../../helpers";
+} from "../../helpers.js";
 import { groupArray, groupArray18, ListChannel } from "../config/categories.js";
 import { MyContext } from "../types/bot.js";
 //@ts-ignore

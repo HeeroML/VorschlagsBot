@@ -2,7 +2,7 @@ import { Composer } from "grammy";
 import { MyContext } from "../types/bot.js";
 import { getCategoriesLinkMarkup } from "../../helpers.js";
 
-const composer = new Composer<MyContext>();
+export const composer = new Composer<MyContext>();
 
 composer.command(
   "commands",
