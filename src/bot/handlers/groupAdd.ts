@@ -11,7 +11,6 @@ import { groupArray, ListChannel } from "../config/categories";
 import { MyContext } from "../types/bot";
 //@ts-ignore
 import meta from "meta-grabber";
-import { createGroup, getGroupLink } from "../../models/groupManage";
 
 const composer = new Composer<MyContext>();
 
@@ -54,7 +53,7 @@ composer.on("message::url").filter(
     (await isUrlExists(ctx.message.text.toString())) && //@ts-ignore
     ctx.message.text.toString().includes("t.me"),
   async (ctx) => {
-    if (ctx.message?.text && !(await getGroupLink(ctx.message.text))) {
+    if (ctx.message?.text) {
       ctx.session.wizard = "group.add";
       ctx.session.step = 2;
       ctx.session.groupLink = ctx.message.text;
@@ -215,7 +214,7 @@ composer.on("callback_query").filter(
     await ctx.answerCallbackQuery();
     await ctx.deleteMessage();
     if (ctx.callbackQuery?.data?.includes("channelAdd.")) {
-      createGroup(
+      /* createGroup(
         ctx.session.groupID,
         ctx.from.id,
         ctx.session.groupName,
@@ -223,7 +222,7 @@ composer.on("callback_query").filter(
         ctx.session.groupDescription,
         ctx.session.categoryId,
         ctx.session.groupType
-      );
+      ); */
       ctx
         .reply(await templatePost(ctx), {
           parse_mode: "HTML",

@@ -1,5 +1,5 @@
-import {CallbackWithoutResult, connect, set} from "mongoose";
+//import {CallbackWithoutResult, connect, set} from "mongoose";
 import env from "../env";
 
-export default (uri: string) =>
-    connect(uri, { });
+//export default (uri: string) =>
+    //connect(uri, { });

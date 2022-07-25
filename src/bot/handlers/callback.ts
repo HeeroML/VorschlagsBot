@@ -1,6 +1,5 @@
 import { Composer } from "grammy";
 import { MyContext } from "../types/bot";
-import { likePressed } from "../../models/groupManage";
 
 const composer = new Composer<MyContext>();
 
@@ -9,9 +8,9 @@ composer.on("callback_query:data").filter(
   (ctx) => ctx.callbackQuery.data.includes("like."),
   async (ctx) => {
     const groupID = ctx.callbackQuery.data.replace("like.", "");
-    const likes = await likePressed(groupID);
+    //const likes = await likePressed(groupID);
     console.log(
-      "Like " + likes + " Pressed:" + JSON.stringify(ctx.callbackQuery)
+     // "Like " + likes + " Pressed:" + JSON.stringify(ctx.callbackQuery)
     );
   }
 );
